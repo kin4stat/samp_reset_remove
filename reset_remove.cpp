@@ -18,7 +18,7 @@ samp_version get_samp_version() {
         case 0x31DF13:
             return samp_version::kR1;
         case 0x3195DD:
-            return samp_version::kR2:
+            return samp_version::kR2;
         case 0xCC4D0:
             return samp_version::kR3;
         case 0xCBCB0:
