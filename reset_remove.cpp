@@ -2,7 +2,9 @@
 
 enum class samp_version {
     kR1,
+    kR2,
     kR3,
+    kR4,
     kUnknown,
 };
 
@@ -15,8 +17,12 @@ samp_version get_samp_version() {
         switch (ep) {
         case 0x31DF13:
             return samp_version::kR1;
+        case 0x3195DD:
+            return samp_version::kR2:
         case 0xCC4D0:
             return samp_version::kR3;
+        case 0xCBCB0:
+            return samp_version::kR4;
         default:
             return samp_version::kUnknown;
         //case 0xCBCB0:  return samp_version::SAMP_0_3_7_R4;
@@ -39,10 +45,18 @@ struct Plugin {
                     hook_address = sampdll + 0xA131;
                     zero_address = sampdll + 0x13B958;
                     break;
+                case samp_version::kR2:
+                    hook_address = sampdll + 0xA122;
+                    zero_address = sampdll + 0x13B958;
+                    break;    
                 case samp_version::kR3:
                     hook_address = sampdll + 0xA2BA;
                     zero_address = sampdll + 0x14FAD8;
                     break;
+                case samp_version::kR4:
+                    hook_address = sampdll + 0xA605;
+                    zero_address = sampdll + 0x14FC00;
+                    break;                
                 default:
                     // if samp version unknown, then hook_address will be zero and
                     // kthook_naked.install() wont install hook
